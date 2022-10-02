@@ -3,5 +3,30 @@ body {
     height: 100vh;
     place-items: center;
     overflow-y: hidden;
+    font-family: monospace;
 }
 
+.game {
+    display: grid;
+    grid-template-columns: repeat(8,auto);
+    justify-content: center;
+}
+
+button {
+    height: 18px;
+    width: 18px;
+    background-color: gray;
+    text-align: center;
+}
+
+.check {
+    background-color: aliceblue;
+}
+
+.bound {
+    background-color: orange;
+}
+
+.bomb {
+    background-color: red;
+}
