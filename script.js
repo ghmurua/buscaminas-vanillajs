@@ -37,21 +37,26 @@ function reset() {
             else board[i] = count
         }
     }
-    console.log(board)
 }
-    
-function clic(i) {
+
+function clic(i,mouseBtn) {
+    // mouseBtn 0:left 2:right
     let box = document.querySelector(`.id${i}`)
-    box.setAttribute('onclick','')
-    if ( board[i] == 0 ) {
-        box.classList.toggle('check')
-        box.innerHTML = ' '
-    } else if ( board[i] == 9 ) {
-        box.classList.toggle('bomb')
-        box.innerHTML = '*'
-    } else {
-        box.classList.toggle('bound')
-        box.innerHTML = board[i]
+    if ( mouseBtn == 0 && box.classList.contains('available') ) {
+        box.classList.toggle('available')
+        if ( box.classList.contains('flag') ) box.classList.toggle('flag')
+        if ( board[i] == 0 ) {
+            box.classList.toggle('clear')
+            box.innerHTML = ' '
+        } else if ( board[i] == 9 ) {
+            box.classList.toggle('bomb')
+            box.innerHTML = '*'
+        } else {
+            box.classList.toggle('bound')
+            box.innerHTML = board[i]
+        }
+    } else if ( mouseBtn == 2 && box.classList.contains('available')) {
+        box.classList.toggle('flag')
     }
 }
 
@@ -66,7 +71,11 @@ function showBox(i) {
 
 // poner en pantalla box con valor oculto
 function placeBox(i) {
-    game.innerHTML += `<button class="id${i}" onclick="clic(${i})"></button>`
+    game.innerHTML += `
+    <button 
+        class="id${i} available" 
+        oncontextmenu="event.preventDefault()">
+    </button>`
 }
 
 // mostrar todos los valores
@@ -82,5 +91,12 @@ function newGame() {
     game.innerHTML = ''
     for ( let i=0; i<sheetSize; i++ ) {
         placeBox(i)
+    }
+
+    // listeners id y que mousebutton
+    for ( let i=0; i<board.length; i++ ) {
+        document.querySelector(`.id${i}`).addEventListener('mousedown',(e)=>{
+            clic(i,e.button)
+        })
     }
 }

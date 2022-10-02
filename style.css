@@ -19,14 +19,28 @@ button {
     text-align: center;
 }
 
-.check {
-    background-color: aliceblue;
+li {
+    background-color: cadetblue;
+    padding: 3px;
+    margin: 1px;
+}
+
+.clear {
+    background-color: #bbb;
+    border: 1px solid gray;
 }
 
 .bound {
-    background-color: orange;
+    /* background-color: orange; */
+    background-color: #bbb;
+    color: blue;
+    border: 1px solid gray;
 }
 
 .bomb {
     background-color: red;
+}
+
+.flag {
+    background-color: orange;
 }
