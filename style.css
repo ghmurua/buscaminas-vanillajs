@@ -1,6 +1,11 @@
+:root {
+    --buttonSize: 22px;
+    --buttonFontSize: 18px;
+}
+
 body {
     display: grid;
-    height: 100vh;
+    height: 50vh;
     place-items: center;
     overflow-y: hidden;
     font-family: monospace;
@@ -13,27 +18,27 @@ body {
 }
 
 button {
-    height: 18px;
-    width: 18px;
-    background-color: gray;
-    text-align: center;
+    height: var(--buttonSize);
+    width: var(--buttonSize);
+    text-align: left;
+    vertical-align: baseline;
+    font-weight: bolder;
+    line-height: 1;
+    font-size: var(--buttonFontSize);
 }
 
-li {
-    background-color: cadetblue;
-    padding: 3px;
-    margin: 1px;
+.available, .flag {
+    background-color: #999;
+    border: 3px solid #ccc;
+    border-style: outset;
 }
 
-.clear {
-    background-color: #bbb;
-    border: 1px solid gray;
+.flag {
+    background-color: orange;
 }
 
-.bound {
-    /* background-color: orange; */
-    background-color: #bbb;
-    color: blue;
+.clear, .bound, .bomb, .available:active {
+    background-color: #aaa;
     border: 1px solid gray;
 }
 
@@ -41,6 +46,16 @@ li {
     background-color: red;
 }
 
-.flag {
-    background-color: orange;
+.b1 { color: blue; }
+.b2 { color: green; }
+.b3 { color: red; }
+.b4 { color: darkblue; }
+.b5 { color: darkred}
+.b6 { color: darkcyan}
+
+li {
+    background-color: cadetblue;
+    padding: 3px;
+    margin: 1px;
 }
+    

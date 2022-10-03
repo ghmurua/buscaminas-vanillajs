@@ -50,13 +50,16 @@ function clic(i,mouseBtn) {
             box.innerHTML = ' '
         } else if ( board[i] == 9 ) {
             box.classList.toggle('bomb')
-            box.innerHTML = '*'
+            box.innerHTML = ' '
         } else {
             box.classList.toggle('bound')
+            box.classList.toggle(`b${board[i]}`)
             box.innerHTML = board[i]
         }
-    } else if ( mouseBtn == 2 && box.classList.contains('available')) {
-        box.classList.toggle('flag')
+    } else if ( mouseBtn == 2 && 
+        (box.classList.contains('available') || box.classList.contains('flag'))) {
+            box.classList.toggle('flag')
+            box.classList.toggle('available')
     }
 }
 
@@ -95,8 +98,10 @@ function newGame() {
 
     // listeners id y que mousebutton
     for ( let i=0; i<board.length; i++ ) {
-        document.querySelector(`.id${i}`).addEventListener('mousedown',(e)=>{
+        document.querySelector(`.id${i}`).addEventListener('mouseup',(e)=>{
             clic(i,e.button)
         })
     }
 }
+
+newGame()
