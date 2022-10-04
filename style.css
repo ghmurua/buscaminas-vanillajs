@@ -15,6 +15,33 @@ body {
     display: grid;
     grid-template-columns: repeat(8,auto);
     justify-content: center;
+    border: 5px outset #777;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px outset #777;
+    background-color: #999;
+    padding: 5px;
+}
+
+.info {
+    width: 100%;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-newGame {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: khaki;
+    text-align: center;
+    transform: rotate(90deg);
 }
 
 button {
@@ -37,9 +64,14 @@ button {
     background-color: orange;
 }
 
-.clear, .bound, .bomb, .available:active {
+.clear, .bound, .bomb {
     background-color: #aaa;
     border: 1px solid gray;
+}
+
+.available:active {
+    background-color: #aaa;
+    border-style: inset;
 }
 
 .bomb {
@@ -53,9 +85,3 @@ button {
 .b5 { color: darkred}
 .b6 { color: darkcyan}
 
-li {
-    background-color: cadetblue;
-    padding: 3px;
-    margin: 1px;
-}
-    

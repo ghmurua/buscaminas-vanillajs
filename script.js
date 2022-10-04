@@ -64,6 +64,7 @@ function clic(i,mouseBtn) {
             clearingClose(i)
         } else if ( board[i] == 9 ) {
             box.classList.toggle('bomb')
+            document.querySelector('.btn-newGame').innerHTML = ':('
         } else {
             box.classList.toggle('bound')
             box.classList.toggle(`b${board[i]}`)
@@ -94,6 +95,7 @@ function show() {
 
 function newGame() {
     reset()
+    document.querySelector('.btn-newGame').innerHTML = ':)'
     game.innerHTML = ''
     for ( let i=0; i<sheetSize; i++ ) {
         placeBox(i)
