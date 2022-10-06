@@ -5,7 +5,7 @@
 
 body {
     display: grid;
-    height: 50vh;
+    height: 100vh;
     place-items: center;
     overflow-y: hidden;
     font-family: monospace;
@@ -13,10 +13,14 @@ body {
 
 .game {
     display: grid;
-    grid-template-columns: repeat(8,auto);
+    /* grid-template-columns: repeat(8,auto); */
     justify-content: center;
     border: 5px outset #777;
 }
+
+.w8 { grid-template-columns: repeat(8,auto); }
+.w16 { grid-template-columns: repeat(16,auto); }
+.w32 { grid-template-columns: repeat(32,auto); }
 
 .container {
     display: flex;
@@ -74,7 +78,7 @@ button {
     border-style: inset;
 }
 
-.bomb {
+.boom {
     background-color: red;
 }
 

@@ -7,13 +7,20 @@
 </head>
 <body>
 
+<div>
+<select onchange="newLevel(value)">
+    <option value="1">Principiante</option>
+    <option value="2">Intermedio</option>
+    <option value="3">Experto</option>
+</select>
 <div class="container">
     <div class="info">
         <span class="infoFlags">0</span>
         <button class="btn-newGame" onclick="newGame()">:)</button>
         <span class="infoTime">0</span>
     </div>
-    <div class="game"></div>
+    <div class="game w8"></div>
+</div>
 </div>
 
 <!-- <button class="btn-test" onclick="showBombs(true)" style="position:absolute;bottom:25px">bombas</button> -->

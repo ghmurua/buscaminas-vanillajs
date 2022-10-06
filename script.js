@@ -15,19 +15,19 @@ function reset() {
     flags = mines
     showInfo()
     // casilleros vacios
-    for ( let i=0; i<sheetSize-mines; i++ ) {
+    let length = sheetSize-mines
+    for ( let i=0; i<length; i++ ) {
         board.push(0)
     }
-
+    
     // se agregan las minas
     for ( let i=0; i<mines; i++ ) {
-        let index = Math.ceil(Math.random()*board.length)
+        let index = Math.ceil(Math.random()*sheetSize)
         board.splice(index,0,9)
     }
-
+    
     // se obtiene el numero de minas adyacentes
-    for ( let i=0; i<board.length; i++ ) {
-        w = Math.sqrt(sheetSize)    // w = medida de cada lado
+    for ( let i=0; i<sheetSize; i++ ) {
         let count = 0
         let wall = ''
         if ( i%w == 0 ) wall = 'L'
@@ -55,10 +55,18 @@ function checkIsClear(i) {
 }
 
 function clearingClose(i) {
-    if ( i%w != 0 ) checkIsClear(i-1)           // left
-    if ( (i+1)%w != 0 ) checkIsClear(i+1)       // right
-    if ( i+w < sheetSize ) checkIsClear(i+w)    // top
-    if ( i-w >= 0 ) checkIsClear(i-w)           // bottom
+    let bottom = i+w < sheetSize
+    let top = i-w >= 0
+    let left = i%w != 0
+    let right = (i+1)%w != 0
+    if ( left ) checkIsClear(i-1)
+    if ( right ) checkIsClear(i+1)
+    if ( top ) checkIsClear(i-w)
+    if ( bottom ) checkIsClear(i+w)
+    if ( top && left ) checkIsClear(i-(w+1))
+    if ( top && right ) checkIsClear(i-(w-1))
+    if ( bottom && left ) checkIsClear(i+(w-1))
+    if ( bottom && right ) checkIsClear(i+(w+1))
 }
 
 function clic(i,mouseBtn) {
@@ -72,6 +80,7 @@ function clic(i,mouseBtn) {
             noMine++
         } else if ( board[i] == 9 ) {
             box.innerHTML = 'x'
+            box.classList.toggle('boom')
             document.querySelector('.btn-newGame').innerHTML = ':('
             showBombs(false)
         } else {
@@ -124,8 +133,10 @@ function showBombs(win) {
             if ( win == true ) {
                 // si se gana se muestran las bombas restantes como flag
                 box.classList.toggle('flag')
+                flags = 0
             } else if ( win == false ) {
                 box.classList.toggle('bomb')
+                box.innerHTML = 'x'
             }
         }
 
@@ -151,6 +162,8 @@ function clicHandler(event) {
     // pasando el id no puedo remover el listener
     // entonces obtengo el id del event
     let id = parseInt(event.path[0].classList[0].slice(2))
+    // event.path deprecated?
+    // let id = parseInt(event.composedPath[0].classList[0].slice(2))
     clic(id,event.button)
 }
 
@@ -163,9 +176,29 @@ function newGame() {
     }
 
     // listeners id y que mousebutton
-    for ( let i=0; i<board.length; i++ ) {
+    for ( let i=0; i<sheetSize; i++ ) {
         document.querySelector(`.id${i}`).addEventListener('mouseup',clicHandler,true)
     }
+}
+
+function newLevel(level) {
+    if ( level == 1 ) {
+        sheetSize = 64
+        w = 8
+        mines = 10
+        game.setAttribute('class','game w8')
+    } else if ( level == 2 ) {
+        sheetSize = 256
+        w = 16
+        mines = 40
+        game.setAttribute('class','game w16')
+    } else if ( level == 3 ) {
+        sheetSize = 512
+        w = 32
+        mines = 99
+        game.setAttribute('class','game w32')
+    }
+    newGame()
 }
 
 newGame()
