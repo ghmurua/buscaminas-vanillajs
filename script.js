@@ -1,6 +1,6 @@
 const game = document.querySelector('.game')
 const infoFlags = document.querySelector('.infoFlags')
-const infoMines = document.querySelector('.infoMines')
+// const infoMines = document.querySelector('.infoMines')
 
 let sheetSize = 64
 let mines = 10
@@ -73,7 +73,7 @@ function clic(i,mouseBtn) {
         } else if ( board[i] == 9 ) {
             box.innerHTML = 'x'
             document.querySelector('.btn-newGame').innerHTML = ':('
-            showBombs()
+            showBombs(false)
         } else {
             box.classList.toggle('bound')
             box.classList.toggle(`b${board[i]}`)
@@ -95,13 +95,14 @@ function clic(i,mouseBtn) {
     // win
     if ( noMine == sheetSize - mines ) {
         document.querySelector('.btn-newGame').innerHTML = ':O'
+        showBombs(true)
     }
     showInfo()
 }
 
 function showInfo() {
     infoFlags.innerHTML = flags
-    infoMines.innerHTML = noMine+'/'+(board.length-mines)
+    // infoMines.innerHTML = noMine+'/'+(board.length-mines)
 }
 
 // poner en pantalla box con valor oculto
@@ -114,13 +115,26 @@ function placeBox(i) {
 }
 
 // mostrar bombs y flags erradas X
-function showBombs() {
+function showBombs(win) {
     for ( let i=0; i<sheetSize; i++ ) {
         let box = document.querySelector(`.id${i}`)
         if ( box.classList.contains('flag') && board[i] != 9 ) {
             box.innerHTML = 'x'
         } else if ( board[i] == 9 && !box.classList.contains('flag') ) {
-            box.classList.toggle('bomb')
+            if ( win == true ) {
+                // si se gana se muestran las bombas restantes como flag
+                box.classList.toggle('flag')
+            } else if ( win == false ) {
+                box.classList.toggle('bomb')
+            }
+        }
+
+        document.querySelector(`.id${i}`).removeEventListener('mouseup',clicHandler,true)
+
+        // elimino el clic visual available:active
+        if ( box.classList.contains('available') ) {
+            box.classList.toggle('available')
+            box.classList.toggle('noClic')
         }
     }
 }
@@ -133,6 +147,13 @@ function show() {
     }    
 }    
 
+function clicHandler(event) {
+    // pasando el id no puedo remover el listener
+    // entonces obtengo el id del event
+    let id = parseInt(event.path[0].classList[0].slice(2))
+    clic(id,event.button)
+}
+
 function newGame() {
     reset()
     document.querySelector('.btn-newGame').innerHTML = ':)'
@@ -143,9 +164,7 @@ function newGame() {
 
     // listeners id y que mousebutton
     for ( let i=0; i<board.length; i++ ) {
-        document.querySelector(`.id${i}`).addEventListener('mouseup',(e)=>{
-            clic(i,e.button)
-        })
+        document.querySelector(`.id${i}`).addEventListener('mouseup',clicHandler,true)
     }
 }
 

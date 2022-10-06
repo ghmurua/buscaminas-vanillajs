@@ -54,7 +54,7 @@ button {
     font-size: var(--buttonFontSize);
 }
 
-.available, .flag {
+.available, .flag, .noClic {
     background-color: #999;
     border: 3px solid #ccc;
     border-style: outset;
