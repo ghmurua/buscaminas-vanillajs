@@ -1,18 +1,37 @@
 const game = document.querySelector('.game')
 const infoFlags = document.querySelector('.infoFlags')
-// const infoMines = document.querySelector('.infoMines')
+const infoTime = document.querySelector('.infoTime')
+const container = document.querySelector('.container')
 
 let sheetSize = 64
 let mines = 10
 let board = []
-let w = 0
+let w = 8
 let noMine = 0
 let flags = mines
+let time = 0
+let interval = 0
+let timesRunning = false
+
+function startTime() {
+    interval = setInterval(()=>{
+        time++
+        showInfo()
+    },1000)
+    timesRunning = true
+}
+
+function stopTime() {
+    clearInterval(interval)
+    timesRunning = false
+}
 
 function reset() {
     board = []
     noMine = 0
     flags = mines
+    time = 0
+    stopTime()
     showInfo()
     // casilleros vacios
     let length = sheetSize-mines
@@ -45,6 +64,10 @@ function reset() {
             else board[i] = count
         }
     }
+
+    if ( container.classList.contains('win') || container.classList.contains('lose') ) {
+        container.setAttribute('class','container')
+    }
 }
 
 function checkIsClear(i) {
@@ -70,6 +93,9 @@ function clearingClose(i) {
 }
 
 function clic(i,mouseBtn) {
+    if ( timesRunning == false ) {
+        startTime()
+    }
     // mouseBtn 0:left 2:right
     let box = document.querySelector(`.id${i}`)
     if ( mouseBtn == 0 && box.classList.contains('available') ) {
@@ -83,6 +109,7 @@ function clic(i,mouseBtn) {
             box.classList.toggle('boom')
             document.querySelector('.btn-newGame').innerHTML = ':('
             showBombs(false)
+            container.classList.add('lose')
         } else {
             box.classList.toggle('bound')
             box.classList.toggle(`b${board[i]}`)
@@ -104,14 +131,17 @@ function clic(i,mouseBtn) {
     // win
     if ( noMine == sheetSize - mines ) {
         document.querySelector('.btn-newGame').innerHTML = ':O'
+        container.classList.add('win')
         showBombs(true)
     }
     showInfo()
 }
 
 function showInfo() {
-    infoFlags.innerHTML = flags
-    // infoMines.innerHTML = noMine+'/'+(board.length-mines)
+    if ( flags < 10 ) infoFlags.innerHTML = '00'+flags
+    else if ( flags < 100 ) infoFlags.innerHTML = '0'+flags
+    if ( time < 10 ) infoTime.innerHTML = '00'+time
+    else if ( time < 100 ) infoTime.innerHTML = '0'+time
 }
 
 // poner en pantalla box con valor oculto
@@ -148,6 +178,7 @@ function showBombs(win) {
             box.classList.toggle('noClic')
         }
     }
+    stopTime()
 }
 
 // mostrar todos los valores
@@ -161,10 +192,18 @@ function show() {
 function clicHandler(event) {
     // pasando el id no puedo remover el listener
     // entonces obtengo el id del event
-    let id = parseInt(event.path[0].classList[0].slice(2))
-    // event.path deprecated?
-    // let id = parseInt(event.composedPath[0].classList[0].slice(2))
-    clic(id,event.button)
+    // event.path deprecated. a mi me funciona el obsoleto
+    let id1
+    let id2
+    try { 
+        id1 = parseInt(event.path[0].classList[0].slice(2))
+        id2 = parseInt(event.composedPath[0].classList[0].slice(2))
+    }
+    catch (error) {
+        console.log(error)
+    }
+    if ( id1 ) clic(id1,event.button)
+    else if ( id2 ) clic(id2,event.button)
 }
 
 function newGame() {

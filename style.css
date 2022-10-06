@@ -13,7 +13,6 @@ body {
 
 .game {
     display: grid;
-    /* grid-template-columns: repeat(8,auto); */
     justify-content: center;
     border: 5px outset #777;
 }
@@ -30,6 +29,9 @@ body {
     background-color: #999;
     padding: 5px;
 }
+
+.win { border: 5px outset greenyellow; }
+.lose { border: 5px outset orangered; }
 
 .info {
     width: 100%;
@@ -89,3 +91,9 @@ button {
 .b5 { color: darkred}
 .b6 { color: darkcyan}
 
+.infoFlags, .infoTime {
+    background-color: #111;
+    color: greenyellow;
+    font-size: 20px;
+    border-radius: 3px;
+}
