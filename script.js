@@ -192,18 +192,10 @@ function show() {
 function clicHandler(event) {
     // pasando el id no puedo remover el listener
     // entonces obtengo el id del event
-    // event.path deprecated. a mi me funciona el obsoleto
-    let id1
-    let id2
-    try { 
-        id1 = parseInt(event.path[0].classList[0].slice(2))
-        id2 = parseInt(event.composedPath[0].classList[0].slice(2))
-    }
-    catch (error) {
-        console.log(error)
-    }
-    if ( id1 ) clic(id1,event.button)
-    else if ( id2 ) clic(id2,event.button)
+    // event.path deprecated
+    let id = parseInt(event.path[0].classList[0].slice(2))
+    // let id = parseInt(event.composedPath[0].classList[0].slice(2))
+    clic(id,event.button)
 }
 
 function newGame() {
