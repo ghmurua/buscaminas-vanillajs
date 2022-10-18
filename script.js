@@ -140,17 +140,10 @@ function clic(i,mouseBtn) {
 function showInfo() {
     if ( flags < 10 ) infoFlags.innerHTML = '00'+flags
     else if ( flags < 100 ) infoFlags.innerHTML = '0'+flags
+    else infoFlags.innerHTML = flags
     if ( time < 10 ) infoTime.innerHTML = '00'+time
     else if ( time < 100 ) infoTime.innerHTML = '0'+time
-}
-
-// poner en pantalla box con valor oculto
-function placeBox(i) {
-    game.innerHTML += `
-    <button 
-        class="id${i} available" 
-        oncontextmenu="event.preventDefault()">
-    </button>`
+    else infoTime.innerHTML = time
 }
 
 // mostrar bombs y flags erradas X
@@ -170,8 +163,6 @@ function showBombs(win) {
             }
         }
 
-        document.querySelector(`.id${i}`).removeEventListener('mouseup',clicHandler,true)
-
         // elimino el clic visual available:active
         if ( box.classList.contains('available') ) {
             box.classList.toggle('available')
@@ -179,6 +170,7 @@ function showBombs(win) {
         }
     }
     stopTime()
+    document.querySelector('.game').removeEventListener('mouseup',clicHandler,true)
 }
 
 // mostrar todos los valores
@@ -203,13 +195,12 @@ function newGame() {
     document.querySelector('.btn-newGame').innerHTML = ':)'
     game.innerHTML = ''
     for ( let i=0; i<sheetSize; i++ ) {
-        placeBox(i)
+        let box = document.createElement('BUTTON')
+        box.setAttribute('class',`id${i} available`)
+        game.appendChild(box)
     }
 
-    // listeners id y que mousebutton
-    for ( let i=0; i<sheetSize; i++ ) {
-        document.querySelector(`.id${i}`).addEventListener('mouseup',clicHandler,true)
-    }
+    document.querySelector('.game').addEventListener('mouseup',clicHandler,true)
 }
 
 function newLevel(level) {
