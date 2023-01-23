@@ -45,6 +45,7 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    border-color: #777;
     background-color: khaki;
     text-align: center;
     transform: rotate(90deg);
