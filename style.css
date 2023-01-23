@@ -67,12 +67,20 @@ button {
 }
 
 .flag {
-    background-color: orange;
+    background-image: url('data:image/svg+xml;UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"> <line x1="9" x2="9" y1="4" y2="16" stroke="black" stroke-width="2" /> <polygon points="9 3, 9 8, 4 6" stroke="red" stroke-width="2" fill="red" /> <polygon points="9 13, 16 16, 2 16" fill="black" /> </svg>');
+}
+
+.failFlag {
+    background-color: #e88;
 }
 
 .clear, .bound, .bomb {
     background-color: #aaa;
     border: 1px solid gray;
+}
+
+.bomb {
+    background-image: url('data:image/svg+xml;UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"> <polyline points="12 10,16 16,1 10,16 4,10 19,4 4,19 10,4 16,10 1,16 16,10 12" stroke="black" /> <circle cx="10" cy="10" r="7" fill="black" /> <circle cx="8" cy="8" r="2" fill="white" /> </svg>');
 }
 
 .available:active {
@@ -90,6 +98,7 @@ button {
 .b4 { color: darkblue; }
 .b5 { color: darkred}
 .b6 { color: darkcyan}
+.b7 { color: black}
 
 .infoFlags, .infoTime {
     background-color: #111;

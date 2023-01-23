@@ -105,7 +105,6 @@ function clic(i,mouseBtn) {
             clearingClose(i)
             noMine++
         } else if ( board[i] == 9 ) {
-            box.innerHTML = 'x'
             box.classList.toggle('boom')
             document.querySelector('.btn-newGame').innerHTML = ':('
             showBombs(false)
@@ -146,12 +145,12 @@ function showInfo() {
     else infoTime.innerHTML = time
 }
 
-// mostrar bombs y flags erradas X
+// mostrar bombs y flags erradas
 function showBombs(win) {
     for ( let i=0; i<sheetSize; i++ ) {
         let box = document.querySelector(`.id${i}`)
         if ( box.classList.contains('flag') && board[i] != 9 ) {
-            box.innerHTML = 'x'
+            box.classList.toggle('failFlag')
         } else if ( board[i] == 9 && !box.classList.contains('flag') ) {
             if ( win == true ) {
                 // si se gana se muestran las bombas restantes como flag
@@ -159,7 +158,6 @@ function showBombs(win) {
                 flags = 0
             } else if ( win == false ) {
                 box.classList.toggle('bomb')
-                box.innerHTML = 'x'
             }
         }
 
@@ -182,12 +180,10 @@ function show() {
 }    
 
 function clicHandler(event) {
-    // pasando el id no puedo remover el listener
-    // entonces obtengo el id del event
-    // event.path deprecated
-    let id = parseInt(event.path[0].classList[0].slice(2))
-    // let id = parseInt(event.composedPath[0].classList[0].slice(2))
-    clic(id,event.button)
+    if (event.target.localName==='button') {
+        let id = parseInt(event.target.classList[0].slice(2))
+        clic(id,event.button)
+    }
 }
 
 function newGame() {
