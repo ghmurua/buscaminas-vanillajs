@@ -44,8 +44,16 @@ function reset() {
         let index = Math.ceil(Math.random()*board.length)
         board.splice(index,0,9)
     }
-    
+
     // se obtiene el numero de minas adyacentes
+    getNumbers()
+
+    if ( container.classList.contains('win') || container.classList.contains('lose') ) {
+        container.setAttribute('class','container')
+    }
+}
+
+function getNumbers() {
     for ( let i=0; i<sheetSize; i++ ) {
         let count = 0
         let wall = ''
@@ -63,10 +71,6 @@ function reset() {
             if ( count == 0 ) board[i] = 0
             else board[i] = count
         }
-    }
-
-    if ( container.classList.contains('win') || container.classList.contains('lose') ) {
-        container.setAttribute('class','container')
     }
 }
 
@@ -92,8 +96,20 @@ function clearingClose(i) {
     if ( bottom && right ) checkIsClear(i+(w+1))
 }
 
+function relocateMine() {
+    let index = Math.ceil(Math.random()*board.length)
+    if ( index === 9 ) return relocateMine()
+    board.splice(index,1,9)
+}
+
 function clic(i,mouseBtn) {
     if ( timesRunning == false ) {
+        // si en el primer clic hay una mina, se reubica
+        if (board[i] === 9) {
+            board[i] = 0
+            relocateMine()
+            getNumbers()
+        }
         startTime()
     }
     // mouseBtn 0:left 2:right
