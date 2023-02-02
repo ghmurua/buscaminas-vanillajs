@@ -41,7 +41,7 @@ function reset() {
     
     // se agregan las minas
     for ( let i=0; i<mines; i++ ) {
-        let index = Math.ceil(Math.random()*sheetSize)
+        let index = Math.ceil(Math.random()*board.length)
         board.splice(index,0,9)
     }
     
